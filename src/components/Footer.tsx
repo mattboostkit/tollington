@@ -12,8 +12,11 @@ const Footer: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
           {/* Logo and About */}
           <div>
-            <Logo variant="dark" className="text-xl" />
-            <p className="mt-4 text-purple-200">
+            <div className="mb-2">
+              <Logo variant="dark" />
+            </div>
+            <h3 className="text-lg font-medium mb-2">Tollington Gospel Choir</h3>
+            <p className="text-purple-200">
               Bringing musical joy to the community through gospel music since 2005.
             </p>
             <div className="flex space-x-4 mt-6">

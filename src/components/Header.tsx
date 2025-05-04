@@ -18,10 +18,10 @@ const Header: React.FC<HeaderProps> = ({ scrolled }) => {
   return (
     <header
       className={classNames(
-        'fixed top-0 left-0 right-0 z-50 transition-all duration-300',
+        'fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-white',
         {
-          'bg-white shadow-md py-2': scrolled || menuOpen,
-          'bg-transparent py-4': !scrolled && !menuOpen,
+          'shadow-md py-3': scrolled || menuOpen,
+          'py-5': !scrolled && !menuOpen,
         }
       )}
     >

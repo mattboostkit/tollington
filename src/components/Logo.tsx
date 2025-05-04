@@ -41,16 +41,16 @@ const Logo: React.FC<LogoProps> = ({ variant = 'light', className = '' }) => {
   return (
     <Link
       to="/"
-      className={`flex items-center gap-2 font-serif font-bold tracking-tighter ${className}`}
+      className={`flex items-center ${className}`}
     >
       {isLoading || !logoUrl ? (
         // Fallback to icon if no logo is available
-        <Music size={24} className={variant === 'dark' ? 'text-amber-500' : 'text-amber-500'} />
+        <Music size={48} className={variant === 'dark' ? 'text-amber-500' : 'text-amber-500'} />
       ) : (
         <img
           src={logoUrl}
           alt="Tollington Gospel Choir"
-          className="h-10 w-auto"
+          className="h-20 w-auto" // 2x larger (from h-10 to h-20)
           onError={(e) => {
             console.error('Error loading logo image:', e);
             // Replace with icon on error
@@ -61,9 +61,7 @@ const Logo: React.FC<LogoProps> = ({ variant = 'light', className = '' }) => {
           }}
         />
       )}
-      <span className={variant === 'dark' ? 'text-white' : 'text-purple-900'}>
-        Tollington Gospel Choir
-      </span>
+      {/* Text removed */}
     </Link>
   );
 };
