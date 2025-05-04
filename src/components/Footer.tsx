@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Facebook, Instagram, Twitter, Youtube as YouTube, Mail, Phone, MapPin } from 'lucide-react';
+import { Facebook, Instagram, Twitter, Youtube as YouTube, Mail, MapPin } from 'lucide-react';
 import Logo from './Logo';
 
 const Footer: React.FC = () => {
@@ -15,7 +15,6 @@ const Footer: React.FC = () => {
             <div className="mb-2">
               <Logo variant="dark" />
             </div>
-            <h3 className="text-lg font-medium mb-2">Tollington Gospel Choir</h3>
             <p className="text-purple-200">
               Bringing musical joy to the community through gospel music since 2005.
             </p>
@@ -78,11 +77,7 @@ const Footer: React.FC = () => {
                   Events
                 </Link>
               </li>
-              <li>
-                <Link to="/media" className="text-purple-200 hover:text-white transition-colors">
-                  Media Gallery
-                </Link>
-              </li>
+
               <li>
                 <Link to="/blog" className="text-purple-200 hover:text-white transition-colors">
                   Blog
@@ -140,12 +135,7 @@ const Footer: React.FC = () => {
                 <MapPin size={20} className="mr-2 mt-1 text-amber-300" />
                 <span className="text-purple-200">St Saviour's Church, Hanley Road, London N4 3DQ</span>
               </li>
-              <li className="flex items-center">
-                <Phone size={20} className="mr-2 text-amber-300" />
-                <a href="tel:02071234567" className="text-purple-200 hover:text-white transition-colors">
-                  020 7123 4567
-                </a>
-              </li>
+
               <li className="flex items-center">
                 <Mail size={20} className="mr-2 text-amber-300" />
                 <a href="mailto:tollingtongospelchoir@gmail.com" className="text-purple-200 hover:text-white transition-colors">

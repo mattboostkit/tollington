@@ -16,7 +16,7 @@ export default {
           400: '#a78bfa',
           500: '#8b5cf6',
           600: '#7c3aed',
-          700: '#6d28d9',
+          700: 'oklch(38.1% 0.176 304.987)', // Updated purple color
           800: '#5b21b6',
           900: '#4c1d95',
           950: '#2e1065',
@@ -27,7 +27,7 @@ export default {
           200: '#fde68a',
           300: '#fcd34d',
           400: '#fbbf24',
-          500: '#f59e0b',
+          500: 'oklch(55.4% 0.135 66.442)', // Updated yellow color
           600: '#d97706',
           700: '#b45309',
           800: '#92400e',

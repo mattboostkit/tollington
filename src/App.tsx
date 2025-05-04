@@ -10,6 +10,8 @@ import BlogPage from './pages/BlogPage';
 import BlogPostPage from './pages/BlogPostPage';
 import JoinUsPage from './pages/JoinUsPage';
 import ContactPage from './pages/ContactPage';
+import PrivacyPolicyPage from './pages/PrivacyPolicyPage';
+import TermsOfServicePage from './pages/TermsOfServicePage';
 import NotFoundPage from './pages/NotFoundPage';
 
 function App() {
@@ -26,6 +28,8 @@ function App() {
             <Route path="blog/:slug" element={<BlogPostPage />} />
             <Route path="join" element={<JoinUsPage />} />
             <Route path="contact" element={<ContactPage />} />
+            <Route path="privacy-policy" element={<PrivacyPolicyPage />} />
+            <Route path="terms-of-service" element={<TermsOfServicePage />} />
             <Route path="*" element={<NotFoundPage />} />
           </Route>
         </Routes>

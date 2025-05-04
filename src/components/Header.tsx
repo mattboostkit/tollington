@@ -75,17 +75,7 @@ const Header: React.FC<HeaderProps> = ({ scrolled }) => {
           >
             Events
           </NavLink>
-          <NavLink
-            to="/media"
-            className={({ isActive }) =>
-              classNames('font-medium transition-colors', {
-                'text-purple-800': isActive,
-                'text-gray-700 hover:text-purple-700': !isActive,
-              })
-            }
-          >
-            Media
-          </NavLink>
+
           <NavLink
             to="/blog"
             className={({ isActive }) =>
@@ -168,18 +158,7 @@ const Header: React.FC<HeaderProps> = ({ scrolled }) => {
             >
               Events
             </NavLink>
-            <NavLink
-              to="/media"
-              className={({ isActive }) =>
-                classNames('text-xl font-medium', {
-                  'text-purple-800': isActive,
-                  'text-gray-700': !isActive,
-                })
-              }
-              onClick={() => setMenuOpen(false)}
-            >
-              Media
-            </NavLink>
+
             <NavLink
               to="/blog"
               className={({ isActive }) =>
