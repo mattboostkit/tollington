@@ -4,6 +4,7 @@ import { format } from 'date-fns';
 import { Clock, Calendar, User, ArrowLeft, Facebook, Twitter, Linkedin } from 'lucide-react';
 
 import SEO from '../components/SEO';
+import SanityBlockContent from '../components/SanityBlockContent';
 import { fetchBlogPost, fetchBlogPosts } from '../utils/sanityClient';
 
 const BlogPostPage: React.FC = () => {
@@ -15,12 +16,12 @@ const BlogPostPage: React.FC = () => {
   useEffect(() => {
     const loadPost = async () => {
       if (!slug) return;
-      
+
       setIsLoading(true);
       try {
         const fetchedPost = await fetchBlogPost(slug);
         setPost(fetchedPost);
-        
+
         // Fetch related posts (in a real app, this would filter by category)
         const fetchedRelatedPosts = await fetchBlogPosts(3);
         setRelatedPosts(fetchedRelatedPosts.filter(p => p.slug !== slug));
@@ -30,7 +31,7 @@ const BlogPostPage: React.FC = () => {
         setIsLoading(false);
       }
     };
-    
+
     loadPost();
   }, [slug]);
 
@@ -64,8 +65,8 @@ const BlogPostPage: React.FC = () => {
 
   return (
     <>
-      <SEO 
-        title={post.title} 
+      <SEO
+        title={post.title}
         description={post.excerpt || post.title}
         image={post.featuredImage}
       />
@@ -77,7 +78,7 @@ const BlogPostPage: React.FC = () => {
             <ArrowLeft size={18} className="mr-2" />
             Back to all posts
           </Link>
-          
+
           {/* Featured Image */}
           <div className="rounded-xl overflow-hidden mb-8 h-96">
             <img
@@ -86,7 +87,7 @@ const BlogPostPage: React.FC = () => {
               className="w-full h-full object-cover"
             />
           </div>
-          
+
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
             {/* Main Content */}
             <div className="lg:col-span-2">
@@ -95,24 +96,24 @@ const BlogPostPage: React.FC = () => {
                 <h1 className="text-3xl md:text-4xl font-serif font-bold mb-4 text-purple-800">
                   {post.title}
                 </h1>
-                
+
                 <div className="flex flex-wrap items-center text-gray-600 text-sm gap-4 mb-6">
                   <div className="flex items-center">
                     <Calendar size={16} className="mr-1" />
                     <span>{formattedDate}</span>
                   </div>
-                  
+
                   <div className="flex items-center">
                     <Clock size={16} className="mr-1" />
                     <span>{post.estimatedReadingTime} min read</span>
                   </div>
-                  
+
                   <div className="flex items-center">
                     <User size={16} className="mr-1" />
                     <span>By {post.author?.name || 'Unknown Author'}</span>
                   </div>
                 </div>
-                
+
                 {post.categories && post.categories.length > 0 && (
                   <div className="flex flex-wrap gap-2 mb-6">
                     {post.categories.map((category: string) => (
@@ -127,14 +128,20 @@ const BlogPostPage: React.FC = () => {
                   </div>
                 )}
               </div>
-              
+
               {/* Post Content */}
               <article className="prose prose-lg max-w-none">
-                {post.body.split('\n\n').map((paragraph: string, index: number) => (
-                  <p key={index}>{paragraph}</p>
-                ))}
+                {typeof post.body === 'string' ? (
+                  // Handle string content (from mock data)
+                  post.body.split('\n\n').map((paragraph: string, index: number) => (
+                    <p key={index}>{paragraph}</p>
+                  ))
+                ) : (
+                  // Handle Sanity block content
+                  <SanityBlockContent blocks={post.body} />
+                )}
               </article>
-              
+
               {/* Share Links */}
               <div className="mt-12 pt-6 border-t border-gray-200">
                 <div className="flex items-center">
@@ -171,7 +178,7 @@ const BlogPostPage: React.FC = () => {
                 </div>
               </div>
             </div>
-            
+
             {/* Sidebar */}
             <div>
               {/* Author Bio */}
@@ -191,13 +198,19 @@ const BlogPostPage: React.FC = () => {
                     <div>
                       <p className="font-medium text-gray-900 mb-2">{post.author.name}</p>
                       {post.author.bio && (
-                        <p className="text-gray-600 text-sm">{post.author.bio}</p>
+                        <div className="text-gray-600 text-sm">
+                          {typeof post.author.bio === 'string' ? (
+                            <p>{post.author.bio}</p>
+                          ) : (
+                            <SanityBlockContent blocks={post.author.bio} />
+                          )}
+                        </div>
                       )}
                     </div>
                   </div>
                 </div>
               )}
-              
+
               {/* Related Posts */}
               {relatedPosts.length > 0 && (
                 <div className="bg-gray-50 p-6 rounded-lg">

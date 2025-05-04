@@ -1,9 +1,9 @@
 import { createClient } from '@sanity/client';
 
 export const client = createClient({
-  projectId: 'your-project-id', // Replace with your Sanity project ID
+  projectId: '5cnyv1t8', // Tollington Sanity project ID
   dataset: 'production',
-  useCdn: true,
+  useCdn: false, // Set to false during development to avoid CORS issues
   apiVersion: '2023-05-03',
 });
 
@@ -12,60 +12,183 @@ export const fetchBlogPosts = async (
   offset: number = 0,
   category?: string
 ) => {
-  let query = `*[_type == "post"] | order(publishedAt desc) [${offset}...${offset + limit}] {
-    title,
-    slug,
-    excerpt,
-    "featuredImage": mainImage.asset->url,
-    publishedAt,
-    "estimatedReadingTime": round(length(pt::text(body)) / 5 / 180),
-    "author": author->name,
-    "category": categories[0]->title
-  }`;
-
-  if (category) {
-    query = `*[_type == "post" && references(*[_type == "category" && title == "${category}"]._id)] | order(publishedAt desc) [${offset}...${offset + limit}] {
+  try {
+    let query = `*[_type == "post"] | order(publishedAt desc) [${offset}...${offset + limit}] {
       title,
-      slug,
-      excerpt,
+      "slug": slug.current,
+      "excerpt": array::join(string::split(pt::text(body), ".")[0..1], ".") + ".",
       "featuredImage": mainImage.asset->url,
       publishedAt,
       "estimatedReadingTime": round(length(pt::text(body)) / 5 / 180),
       "author": author->name,
       "category": categories[0]->title
     }`;
-  }
 
-  // For now, we'll use mock data since Sanity is not set up yet
-  return getMockBlogPosts();
+    if (category) {
+      query = `*[_type == "post" && references(*[_type == "category" && title == "${category}"]._id)] | order(publishedAt desc) [${offset}...${offset + limit}] {
+        title,
+        "slug": slug.current,
+        "excerpt": array::join(string::split(pt::text(body), ".")[0..1], ".") + ".",
+        "featuredImage": mainImage.asset->url,
+        publishedAt,
+        "estimatedReadingTime": round(length(pt::text(body)) / 5 / 180),
+        "author": author->name,
+        "category": categories[0]->title
+      }`;
+    }
+
+    const posts = await client.fetch(query);
+
+    // If no posts are found in Sanity, fall back to mock data during development
+    if (posts && posts.length > 0) {
+      return posts;
+    } else {
+      console.warn('No posts found in Sanity, using mock data');
+      return getMockBlogPosts();
+    }
+  } catch (error) {
+    console.error('Error fetching blog posts from Sanity:', error);
+    return getMockBlogPosts();
+  }
 };
 
 export const fetchBlogPost = async (slug: string) => {
-  const query = `*[_type == "post" && slug.current == "${slug}"][0] {
-    title,
-    body,
-    "featuredImage": mainImage.asset->url,
-    publishedAt,
-    "estimatedReadingTime": round(length(pt::text(body)) / 5 / 180),
-    "author": author->{name, "image": image.asset->url, bio},
-    "categories": categories[]->title
-  }`;
+  try {
+    const query = `*[_type == "post" && slug.current == "${slug}"][0] {
+      title,
+      body,
+      "featuredImage": mainImage.asset->url,
+      publishedAt,
+      "estimatedReadingTime": round(length(pt::text(body)) / 5 / 180),
+      "author": author->{name, "image": image.asset->url, bio},
+      "categories": categories[]->title
+    }`;
 
-  // For now, we'll use mock data since Sanity is not set up yet
-  return getMockBlogPost(slug);
+    const post = await client.fetch(query);
+
+    if (post) {
+      return post;
+    } else {
+      console.warn(`No post found with slug "${slug}", using mock data`);
+      return getMockBlogPost(slug);
+    }
+  } catch (error) {
+    console.error('Error fetching blog post from Sanity:', error);
+    return getMockBlogPost(slug);
+  }
 };
 
 export const fetchCategories = async () => {
-  const query = `*[_type == "category"] {
-    title,
-    "count": count(*[_type == "post" && references(^._id)])
-  }`;
+  try {
+    const query = `*[_type == "category"] {
+      title,
+      "count": count(*[_type == "post" && references(^._id)])
+    }`;
 
-  // For now, we'll use mock data since Sanity is not set up yet
-  return getMockCategories();
+    const categories = await client.fetch(query);
+
+    if (categories && categories.length > 0) {
+      return categories;
+    } else {
+      console.warn('No categories found in Sanity, using mock data');
+      return getMockCategories();
+    }
+  } catch (error) {
+    console.error('Error fetching categories from Sanity:', error);
+    return getMockCategories();
+  }
+};
+
+// Function to fetch site settings from Sanity
+export const fetchSiteSettings = async () => {
+  try {
+    console.log('Executing Sanity query for site settings...');
+    const query = `*[_type == "siteSettings"][0] {
+      title,
+      description,
+      "logo": logo.asset->url,
+      "darkLogo": darkLogo.asset->url,
+      "favicon": favicon.asset->url,
+      contactInfo,
+      socialMedia
+    }`;
+
+    console.log('Using Sanity client with config:', client.config());
+    const settings = await client.fetch(query);
+    console.log('Raw settings response:', settings);
+
+    if (settings) {
+      console.log('Site settings found:', {
+        title: settings.title,
+        hasLogo: !!settings.logo,
+        hasDarkLogo: !!settings.darkLogo
+      });
+      return settings;
+    } else {
+      console.warn('No site settings found in Sanity');
+      return null;
+    }
+  } catch (error) {
+    console.error('Error fetching site settings from Sanity:', error);
+    console.error('Error details:', error instanceof Error ? error.message : String(error));
+    return null;
+  }
+};
+
+// Function to fetch events from Sanity
+export const fetchEvents = async (status: 'upcoming' | 'past' = 'upcoming') => {
+  try {
+    const query = `*[_type == "event" && status == $status] | order(date ${status === 'upcoming' ? 'asc' : 'desc'}) {
+      title,
+      "slug": slug.current,
+      date,
+      time,
+      location,
+      "image": image.asset->url,
+      description,
+      details,
+      ticketLink,
+      eventType
+    }`;
+
+    const events = await client.fetch(query, { status });
+
+    if (events && events.length > 0) {
+      // Transform the data to match the Event interface
+      return events.map((event: any) => ({
+        id: event.slug,
+        title: event.title,
+        date: new Date(event.date),
+        time: event.time,
+        location: event.location,
+        image: event.image,
+        description: event.description,
+        details: event.details,
+        ticketLink: event.ticketLink
+      }));
+    } else {
+      console.warn(`No ${status} events found in Sanity, using mock data`);
+      return status === 'upcoming' ? getMockUpcomingEvents() : getMockPastEvents();
+    }
+  } catch (error) {
+    console.error('Error fetching events from Sanity:', error);
+    return status === 'upcoming' ? getMockUpcomingEvents() : getMockPastEvents();
+  }
 };
 
 // Mock data functions to use until Sanity is set up
+const getMockUpcomingEvents = () => {
+  return upcomingEvents;
+};
+
+const getMockPastEvents = () => {
+  return pastEvents;
+};
+
+// Import mock events data
+import { upcomingEvents, pastEvents } from '../data/events';
+
+// Mock blog data functions
 const getMockBlogPosts = () => {
   return [
     {

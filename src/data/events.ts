@@ -12,9 +12,9 @@ export interface Event {
 
 export const upcomingEvents: Event[] = [
   {
-    id: 'summer-concert-2023',
-    title: 'Summer Concert 2023',
-    date: new Date('2023-07-15'),
+    id: 'summer-concert-2025',
+    title: 'Summer Concert 2025',
+    date: new Date('2025-07-15'),
     time: '7:00 PM - 9:30 PM',
     location: 'St. Mary\'s Church, London',
     image: 'https://images.pexels.com/photos/210766/pexels-photo-210766.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
@@ -25,7 +25,7 @@ export const upcomingEvents: Event[] = [
   {
     id: 'gospel-workshop-june',
     title: 'Gospel Workshop',
-    date: new Date('2023-06-24'),
+    date: new Date('2025-06-24'),
     time: '10:00 AM - 4:00 PM',
     location: 'Tollington Community Centre',
     image: 'https://images.pexels.com/photos/7672255/pexels-photo-7672255.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
@@ -36,7 +36,7 @@ export const upcomingEvents: Event[] = [
   {
     id: 'charity-fundraiser',
     title: 'Charity Fundraiser',
-    date: new Date('2023-08-05'),
+    date: new Date('2025-08-05'),
     time: '3:00 PM - 6:00 PM',
     location: 'Finsbury Park',
     image: 'https://images.pexels.com/photos/2747449/pexels-photo-2747449.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
@@ -47,7 +47,7 @@ export const upcomingEvents: Event[] = [
   {
     id: 'community-singing-day',
     title: 'Community Singing Day',
-    date: new Date('2023-09-16'),
+    date: new Date('2025-09-16'),
     time: '11:00 AM - 2:00 PM',
     location: 'Tollington Park',
     image: 'https://images.pexels.com/photos/4867182/pexels-photo-4867182.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
@@ -60,7 +60,7 @@ export const pastEvents: Event[] = [
   {
     id: 'easter-celebration',
     title: 'Easter Celebration Concert',
-    date: new Date('2023-04-16'),
+    date: new Date('2024-04-16'),
     time: '6:30 PM - 8:30 PM',
     location: 'All Saints Church, London',
     image: 'https://images.pexels.com/photos/260409/pexels-photo-260409.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
@@ -69,7 +69,7 @@ export const pastEvents: Event[] = [
   {
     id: 'black-history-month',
     title: 'Black History Month Celebration',
-    date: new Date('2022-10-22'),
+    date: new Date('2024-10-22'),
     time: '7:00 PM - 9:00 PM',
     location: 'Hackney Town Hall',
     image: 'https://images.pexels.com/photos/2228568/pexels-photo-2228568.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
@@ -78,7 +78,7 @@ export const pastEvents: Event[] = [
   {
     id: 'christmas-carol-service',
     title: 'Christmas Carol Service',
-    date: new Date('2022-12-18'),
+    date: new Date('2024-12-18'),
     time: '5:00 PM - 7:00 PM',
     location: 'St. Paul\'s Cathedral',
     image: 'https://images.pexels.com/photos/6141914/pexels-photo-6141914.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',

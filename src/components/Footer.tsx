@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Facebook, Instagram, Twitter, Youtube as YouTube, Mail, Phone, MapPin, Music } from 'lucide-react';
+import { Facebook, Instagram, Twitter, Youtube as YouTube, Mail, Phone, MapPin } from 'lucide-react';
+import Logo from './Logo';
 
 const Footer: React.FC = () => {
   const currentYear = new Date().getFullYear();
@@ -11,10 +12,7 @@ const Footer: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
           {/* Logo and About */}
           <div>
-            <Link to="/" className="flex items-center gap-2 font-serif text-xl font-bold">
-              <Music size={24} className="text-amber-500" />
-              <span>Tollington Gospel Choir</span>
-            </Link>
+            <Logo variant="dark" className="text-xl" />
             <p className="mt-4 text-purple-200">
               Bringing musical joy to the community through gospel music since 2005.
             </p>
@@ -137,7 +135,7 @@ const Footer: React.FC = () => {
             <ul className="space-y-4">
               <li className="flex items-start">
                 <MapPin size={20} className="mr-2 mt-1 text-amber-300" />
-                <span className="text-purple-200">123 Tollington Park, London, N4 3AG</span>
+                <span className="text-purple-200">St Saviour's Church, Hanley Road, London N4 3DQ</span>
               </li>
               <li className="flex items-center">
                 <Phone size={20} className="mr-2 text-amber-300" />
@@ -147,8 +145,8 @@ const Footer: React.FC = () => {
               </li>
               <li className="flex items-center">
                 <Mail size={20} className="mr-2 text-amber-300" />
-                <a href="mailto:info@tollingtongospelchoir.co.uk" className="text-purple-200 hover:text-white transition-colors">
-                  info@tollingtongospelchoir.co.uk
+                <a href="mailto:tollingtongospelchoir@gmail.com" className="text-purple-200 hover:text-white transition-colors">
+                  tollingtongospelchoir@gmail.com
                 </a>
               </li>
             </ul>

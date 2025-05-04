@@ -9,8 +9,8 @@ import ContactForm from '../components/ContactForm';
 const ContactPage: React.FC = () => {
   return (
     <>
-      <SEO 
-        title="Contact Us" 
+      <SEO
+        title="Contact Us"
         description="Get in touch with Tollington Gospel Choir for inquiries, bookings, or to learn more about joining us."
       />
 
@@ -41,10 +41,10 @@ const ContactPage: React.FC = () => {
                   Have a question about joining the choir, booking us for an event, or anything else? Fill out the form below and we'll get back to you as soon as possible.
                 </p>
               </motion.div>
-              
+
               <ContactForm />
             </div>
-            
+
             {/* Contact Information */}
             <div>
               <motion.div
@@ -60,7 +60,7 @@ const ContactPage: React.FC = () => {
                 <p className="text-lg text-gray-700 mb-8">
                   You can reach us through any of the following methods or connect with us on social media.
                 </p>
-                
+
                 <div className="space-y-6 mb-10">
                   <div className="flex items-start">
                     <div className="bg-purple-100 p-3 rounded-full mr-4">
@@ -68,10 +68,10 @@ const ContactPage: React.FC = () => {
                     </div>
                     <div>
                       <h3 className="font-medium text-gray-900 mb-1">Our Location</h3>
-                      <p className="text-gray-600">123 Tollington Park, London, N4 3AG</p>
+                      <p className="text-gray-600">St Saviour's Church, Hanley Road, London N4 3DQ</p>
                     </div>
                   </div>
-                  
+
                   <div className="flex items-start">
                     <div className="bg-purple-100 p-3 rounded-full mr-4">
                       <Mail className="text-purple-700" size={20} />
@@ -79,14 +79,14 @@ const ContactPage: React.FC = () => {
                     <div>
                       <h3 className="font-medium text-gray-900 mb-1">Email Address</h3>
                       <a
-                        href="mailto:info@tollingtongospelchoir.co.uk"
+                        href="mailto:tollingtongospelchoir@gmail.com"
                         className="text-purple-700 hover:text-purple-800"
                       >
-                        info@tollingtongospelchoir.co.uk
+                        tollingtongospelchoir@gmail.com
                       </a>
                     </div>
                   </div>
-                  
+
                   <div className="flex items-start">
                     <div className="bg-purple-100 p-3 rounded-full mr-4">
                       <Phone className="text-purple-700" size={20} />
@@ -101,7 +101,7 @@ const ContactPage: React.FC = () => {
                       </a>
                     </div>
                   </div>
-                  
+
                   <div className="flex items-start">
                     <div className="bg-purple-100 p-3 rounded-full mr-4">
                       <Clock className="text-purple-700" size={20} />
@@ -116,7 +116,7 @@ const ContactPage: React.FC = () => {
                   </div>
                 </div>
               </motion.div>
-              
+
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -164,7 +164,7 @@ const ContactPage: React.FC = () => {
                     <Youtube size={20} />
                   </a>
                 </div>
-                
+
                 <div className="bg-amber-50 p-6 rounded-lg">
                   <h3 className="text-xl font-serif font-semibold mb-3 text-purple-800">
                     Looking to Book Us?
@@ -173,10 +173,10 @@ const ContactPage: React.FC = () => {
                     For performance bookings, please contact our booking manager directly via email or phone, or use the contact form with "Booking Inquiry" as the subject.
                   </p>
                   <a
-                    href="mailto:bookings@tollingtongospelchoir.co.uk"
+                    href="mailto:tollingtongospelchoir@gmail.com"
                     className="text-purple-700 font-medium hover:text-purple-800"
                   >
-                    bookings@tollingtongospelchoir.co.uk
+                    tollingtongospelchoir@gmail.com
                   </a>
                 </div>
               </motion.div>
@@ -191,7 +191,7 @@ const ContactPage: React.FC = () => {
           <iframe
             title="Tollington Gospel Choir Location"
             className="w-full h-full border-0"
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2480.2775406568385!2d-0.12022468424721013!3d51.561987279644744!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x48761b7ae939a3b7%3A0x24eef7697a7d5895!2sTollington%20Park%2C%20London%20N4%203AG!5e0!3m2!1sen!2suk!4v1666553731208!5m2!1sen!2suk"
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2480.5536379372!2d-0.11686812348485!3d51.55695397181783!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x48761b7c2f7d5e99%3A0x9a7012a6d3b4c7a0!2sSt%20Saviour&#39;s%20Church!5e0!3m2!1sen!2sus!4v1715183731208!5m2!1sen!2sus"
             allowFullScreen={true}
             loading="lazy"
             referrerPolicy="no-referrer-when-downgrade"

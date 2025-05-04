@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { NavLink, Link } from 'react-router-dom';
-import { Menu, X, Music } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 import classNames from 'classnames';
+import Logo from './Logo';
 
 interface HeaderProps {
   scrolled: boolean;
@@ -25,14 +26,9 @@ const Header: React.FC<HeaderProps> = ({ scrolled }) => {
       )}
     >
       <div className="container-custom flex items-center justify-between">
-        <Link
-          to="/"
-          className="flex items-center gap-2 font-serif text-2xl font-bold text-purple-800"
-          onClick={() => setMenuOpen(false)}
-        >
-          <Music size={28} className="text-amber-500" />
-          <span>Tollington Choir</span>
-        </Link>
+        <div onClick={() => setMenuOpen(false)}>
+          <Logo className="text-2xl" />
+        </div>
 
         {/* Mobile menu button */}
         <button

@@ -10,25 +10,38 @@ import EventCard from '../components/EventCard';
 import TestimonialCard from '../components/TestimonialCard';
 import BlogCard from '../components/BlogCard';
 
-import { upcomingEvents } from '../data/events';
-import { fetchBlogPosts } from '../utils/sanityClient';
+import { fetchBlogPosts, fetchEvents } from '../utils/sanityClient';
 
 const HomePage: React.FC = () => {
   const [blogPosts, setBlogPosts] = React.useState<any[]>([]);
+  const [upcomingEvents, setUpcomingEvents] = React.useState<any[]>([]);
+  const [isLoading, setIsLoading] = React.useState<boolean>(true);
 
   React.useEffect(() => {
-    const loadBlogPosts = async () => {
-      const posts = await fetchBlogPosts(3);
-      setBlogPosts(posts);
+    const loadData = async () => {
+      setIsLoading(true);
+      try {
+        // Load blog posts
+        const posts = await fetchBlogPosts(3);
+        setBlogPosts(posts);
+
+        // Load upcoming events
+        const events = await fetchEvents('upcoming');
+        setUpcomingEvents(events);
+      } catch (error) {
+        console.error('Error loading homepage data:', error);
+      } finally {
+        setIsLoading(false);
+      }
     };
 
-    loadBlogPosts();
+    loadData();
   }, []);
 
   return (
     <>
-      <SEO 
-        title="Home" 
+      <SEO
+        title="Home"
         description="Tollington Gospel Choir - Bringing musical joy to the community through gospel music since 2008."
       />
 
@@ -97,7 +110,7 @@ const HomePage: React.FC = () => {
                 </Link>
               </div>
             </motion.div>
-            
+
             <motion.div
               className="relative rounded-lg overflow-hidden shadow-xl"
               initial={{ opacity: 0, x: 20 }}
@@ -127,22 +140,37 @@ const HomePage: React.FC = () => {
             title="Upcoming Events"
             subtitle="Join us at our next performance or workshop. Experience the uplifting power of gospel music!"
           />
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {upcomingEvents.slice(0, 3).map((event) => (
-              <EventCard
-                key={event.id}
-                id={event.id}
-                title={event.title}
-                date={event.date}
-                time={event.time}
-                location={event.location}
-                image={event.image}
-                description={event.description}
-              />
-            ))}
-          </div>
-          
+
+          {isLoading ? (
+            <div className="flex justify-center py-12">
+              <div className="animate-spin h-8 w-8 border-4 border-purple-500 rounded-full border-t-transparent"></div>
+            </div>
+          ) : upcomingEvents.length > 0 ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {upcomingEvents.slice(0, 3).map((event) => (
+                <EventCard
+                  key={event.id}
+                  id={event.id}
+                  title={event.title}
+                  date={event.date}
+                  time={event.time}
+                  location={event.location}
+                  image={event.image}
+                  description={event.description}
+                />
+              ))}
+            </div>
+          ) : (
+            <div className="text-center py-12">
+              <h3 className="text-xl font-serif font-semibold mb-2 text-purple-800">
+                No upcoming events
+              </h3>
+              <p className="text-gray-600">
+                Check back soon for new events or subscribe to our newsletter.
+              </p>
+            </div>
+          )}
+
           <div className="mt-12 text-center">
             <Link to="/events" className="btn-primary">
               View All Events
@@ -159,7 +187,7 @@ const HomePage: React.FC = () => {
             subtitle="Hear from choir members, audience members, and workshop participants"
             light={true}
           />
-          
+
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             <TestimonialCard
               quote="Joining Tollington Gospel Choir has been life-changing. The music we create together is powerful, and the community is so welcoming."
@@ -167,14 +195,14 @@ const HomePage: React.FC = () => {
               role="Choir Member"
               image="https://images.pexels.com/photos/762020/pexels-photo-762020.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
             />
-            
+
             <TestimonialCard
               quote="Their performance brought tears to my eyes. The harmony, the emotion, the pure joy of their singing was incredible."
               name="David Johnson"
               role="Concert Attendee"
               image="https://images.pexels.com/photos/2379005/pexels-photo-2379005.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
             />
-            
+
             <TestimonialCard
               quote="The workshop was fantastic! I came in nervous about singing, but left feeling confident and inspired."
               name="Michelle Thompson"
@@ -192,7 +220,7 @@ const HomePage: React.FC = () => {
             title="From Our Blog"
             subtitle="Stay updated with choir news, event recaps, and insights into gospel music"
           />
-          
+
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {blogPosts.map((post) => (
               <BlogCard
@@ -208,7 +236,7 @@ const HomePage: React.FC = () => {
               />
             ))}
           </div>
-          
+
           <div className="mt-12 text-center">
             <Link to="/blog" className="btn-outline">
               Read More Articles

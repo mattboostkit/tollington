@@ -5,7 +5,7 @@ export default {
     extend: {
       fontFamily: {
         sans: ['Inter', 'sans-serif'],
-        serif: ['Satoshi', 'sans-serif'],
+        serif: ['Manrope', 'sans-serif'],
       },
       colors: {
         primary: {
@@ -71,6 +71,9 @@ export default {
           '0%': { transform: 'translateX(20px)', opacity: '0' },
           '100%': { transform: 'translateX(0)', opacity: '1' },
         },
+      },
+      letterSpacing: {
+        'tighter': '-0.04em',
       },
     },
   },

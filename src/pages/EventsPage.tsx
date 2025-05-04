@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Calendar } from 'lucide-react';
 import { format } from 'date-fns';
@@ -7,15 +7,40 @@ import SEO from '../components/SEO';
 import Hero from '../components/Hero';
 import SectionTitle from '../components/SectionTitle';
 import EventCard from '../components/EventCard';
-import { upcomingEvents, pastEvents } from '../data/events';
+import { fetchEvents } from '../utils/sanityClient';
+import { Event } from '../data/events';
 
 const EventsPage: React.FC = () => {
   const [activeTab, setActiveTab] = useState<'upcoming' | 'past'>('upcoming');
+  const [upcomingEvents, setUpcomingEvents] = useState<Event[]>([]);
+  const [pastEvents, setPastEvents] = useState<Event[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+
+  useEffect(() => {
+    const loadEvents = async () => {
+      setIsLoading(true);
+      try {
+        // Fetch upcoming events
+        const upcoming = await fetchEvents('upcoming');
+        setUpcomingEvents(upcoming);
+
+        // Fetch past events
+        const past = await fetchEvents('past');
+        setPastEvents(past);
+      } catch (error) {
+        console.error('Error loading events:', error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    loadEvents();
+  }, []);
 
   return (
     <>
-      <SEO 
-        title="Events" 
+      <SEO
+        title="Events"
         description="Find out where and when you can experience Tollington Gospel Choir live. See our upcoming concerts, workshops, and past performances."
       />
 
@@ -33,7 +58,7 @@ const EventsPage: React.FC = () => {
             title="Join Us In Person"
             subtitle="From concerts to workshops, there are many ways to experience our music"
           />
-          
+
           <div className="mb-12">
             <div className="flex justify-center border-b border-gray-200">
               <button
@@ -58,7 +83,7 @@ const EventsPage: React.FC = () => {
               </button>
             </div>
           </div>
-          
+
           <motion.div
             key={activeTab}
             initial={{ opacity: 0 }}
@@ -66,23 +91,38 @@ const EventsPage: React.FC = () => {
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
           >
-            {activeTab === 'upcoming' ? (
+            {isLoading ? (
+              <div className="flex justify-center py-12">
+                <div className="animate-spin h-8 w-8 border-4 border-purple-500 rounded-full border-t-transparent"></div>
+              </div>
+            ) : activeTab === 'upcoming' ? (
               <>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
-                  {upcomingEvents.map((event) => (
-                    <EventCard
-                      key={event.id}
-                      id={event.id}
-                      title={event.title}
-                      date={event.date}
-                      time={event.time}
-                      location={event.location}
-                      image={event.image}
-                      description={event.description}
-                    />
-                  ))}
-                </div>
-                
+                {upcomingEvents.length > 0 ? (
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+                    {upcomingEvents.map((event) => (
+                      <EventCard
+                        key={event.id}
+                        id={event.id}
+                        title={event.title}
+                        date={event.date}
+                        time={event.time}
+                        location={event.location}
+                        image={event.image}
+                        description={event.description}
+                      />
+                    ))}
+                  </div>
+                ) : (
+                  <div className="text-center py-12">
+                    <h3 className="text-xl font-serif font-semibold mb-2 text-purple-800">
+                      No upcoming events
+                    </h3>
+                    <p className="text-gray-600">
+                      Check back soon for new events or subscribe to our newsletter.
+                    </p>
+                  </div>
+                )}
+
                 <div className="bg-amber-50 p-8 rounded-lg">
                   <div className="flex flex-col md:flex-row items-start md:items-center gap-6">
                     <div className="bg-amber-100 p-4 rounded-full">
@@ -104,34 +144,47 @@ const EventsPage: React.FC = () => {
                 </div>
               </>
             ) : (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {pastEvents.map((event) => (
-                  <EventCard
-                    key={event.id}
-                    id={event.id}
-                    title={event.title}
-                    date={event.date}
-                    time={event.time}
-                    location={event.location}
-                    image={event.image}
-                    description={event.description}
-                  />
-                ))}
-              </div>
+              <>
+                {pastEvents.length > 0 ? (
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    {pastEvents.map((event) => (
+                      <EventCard
+                        key={event.id}
+                        id={event.id}
+                        title={event.title}
+                        date={event.date}
+                        time={event.time}
+                        location={event.location}
+                        image={event.image}
+                        description={event.description}
+                      />
+                    ))}
+                  </div>
+                ) : (
+                  <div className="text-center py-12">
+                    <h3 className="text-xl font-serif font-semibold mb-2 text-purple-800">
+                      No past events
+                    </h3>
+                    <p className="text-gray-600">
+                      Our event history will appear here after events have taken place.
+                    </p>
+                  </div>
+                )}
+              </>
             )}
           </motion.div>
         </div>
       </section>
 
       {/* Featured Event */}
-      {activeTab === 'upcoming' && upcomingEvents.length > 0 && (
+      {activeTab === 'upcoming' && !isLoading && upcomingEvents.length > 0 && (
         <section className="section bg-gray-50">
           <div className="container-custom">
             <SectionTitle
               title="Featured Event"
               subtitle="Don't miss our special upcoming performance"
             />
-            
+
             <div className="bg-white rounded-lg shadow-lg overflow-hidden">
               <div className="grid grid-cols-1 lg:grid-cols-2">
                 <div className="h-96 lg:h-auto">
@@ -141,13 +194,13 @@ const EventsPage: React.FC = () => {
                     className="w-full h-full object-cover"
                   />
                 </div>
-                
+
                 <div className="p-8 lg:p-12 flex flex-col">
                   <div className="flex-grow">
                     <h3 className="text-2xl lg:text-3xl font-serif font-bold mb-4 text-purple-800">
                       {upcomingEvents[0].title}
                     </h3>
-                    
+
                     <div className="space-y-4 mb-6">
                       <div className="flex items-start">
                         <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-amber-500 mr-3 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -164,7 +217,7 @@ const EventsPage: React.FC = () => {
                           <p className="text-gray-600">{upcomingEvents[0].time}</p>
                         </div>
                       </div>
-                      
+
                       <div className="flex items-start">
                         <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-amber-500 mr-3 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                           <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z" />
@@ -176,12 +229,12 @@ const EventsPage: React.FC = () => {
                         </div>
                       </div>
                     </div>
-                    
+
                     <p className="text-gray-700 mb-6">
                       {upcomingEvents[0].details || upcomingEvents[0].description}
                     </p>
                   </div>
-                  
+
                   {upcomingEvents[0].ticketLink && (
                     <div className="mt-auto">
                       <a
@@ -212,7 +265,7 @@ const EventsPage: React.FC = () => {
               <p className="text-purple-100 text-lg mb-8">
                 Tollington Gospel Choir is available for private bookings, adding a memorable musical experience to your special occasions:
               </p>
-              
+
               <div className="space-y-4 mb-8">
                 <div className="flex items-start">
                   <div className="bg-purple-700 p-1 rounded-full mr-3 mt-1">
@@ -263,7 +316,7 @@ const EventsPage: React.FC = () => {
                   <p>Private celebrations and parties</p>
                 </div>
               </div>
-              
+
               <a
                 href="/contact"
                 className="btn-secondary inline-block"
@@ -271,7 +324,7 @@ const EventsPage: React.FC = () => {
                 Enquire About Booking
               </a>
             </div>
-            
+
             <div className="relative">
               <img
                 src="https://images.pexels.com/photos/3985238/pexels-photo-3985238.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
