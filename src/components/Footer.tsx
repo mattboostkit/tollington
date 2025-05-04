@@ -105,7 +105,7 @@ const Footer: React.FC = () => {
                   <p className="text-amber-300 group-hover:text-amber-200 font-medium transition-colors">
                     Summer Concert Highlights
                   </p>
-                  <p className="text-sm text-purple-200">June 15, 2023</p>
+                  <p className="text-sm text-purple-200">June 15, 2025</p>
                 </Link>
               </li>
               <li>
@@ -113,7 +113,7 @@ const Footer: React.FC = () => {
                   <p className="text-amber-300 group-hover:text-amber-200 font-medium transition-colors">
                     Welcome to Our New Members
                   </p>
-                  <p className="text-sm text-purple-200">May 22, 2023</p>
+                  <p className="text-sm text-purple-200">May 22, 2025</p>
                 </Link>
               </li>
               <li>
@@ -121,7 +121,7 @@ const Footer: React.FC = () => {
                   <p className="text-amber-300 group-hover:text-amber-200 font-medium transition-colors">
                     Gospel Workshop Success
                   </p>
-                  <p className="text-sm text-purple-200">April 10, 2023</p>
+                  <p className="text-sm text-purple-200">April 10, 2025</p>
                 </Link>
               </li>
             </ul>

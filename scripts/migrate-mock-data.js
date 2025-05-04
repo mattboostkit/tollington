@@ -60,7 +60,7 @@ const mockPosts = {
     slug: "summer-concert-highlights",
     body: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.\n\nDuis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
     featuredImage: "https://images.pexels.com/photos/995301/pexels-photo-995301.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
-    publishedAt: new Date("2023-06-15"),
+    publishedAt: new Date("2025-06-15"),
     estimatedReadingTime: 4,
     author: {
       name: "Emma Thompson",
@@ -74,7 +74,7 @@ const mockPosts = {
     slug: "new-members-welcome",
     body: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.\n\nDuis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
     featuredImage: "https://images.pexels.com/photos/8412420/pexels-photo-8412420.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
-    publishedAt: new Date("2023-05-22"),
+    publishedAt: new Date("2025-05-22"),
     estimatedReadingTime: 3,
     author: {
       name: "Michael Richards",
@@ -88,7 +88,7 @@ const mockPosts = {
     slug: "gospel-workshop-success",
     body: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.\n\nDuis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
     featuredImage: "https://images.pexels.com/photos/7672255/pexels-photo-7672255.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
-    publishedAt: new Date("2023-04-10"),
+    publishedAt: new Date("2025-04-10"),
     estimatedReadingTime: 5,
     author: {
       name: "James Wilson",
@@ -102,7 +102,7 @@ const mockPosts = {
     slug: "behind-the-music",
     body: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.\n\nDuis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
     featuredImage: "https://images.pexels.com/photos/6173866/pexels-photo-6173866.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
-    publishedAt: new Date("2023-03-15"),
+    publishedAt: new Date("2025-03-15"),
     estimatedReadingTime: 6,
     author: {
       name: "Olivia Parker",
